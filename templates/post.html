@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="/">
+    <button class="btn btn-dark" style="margin-top: 15px;">
+        Back to home
+    </button>
+</a>
+
+<b>
+    {% if error != "" %}
+        {% if error == "The comment removed successfully." %}
+            <span style="color: green;">
+                {{ error }}
+            </span>
+        {% else %}
+            <span style="color: red;">
+                {{ error }}
+            </span>
+        {% endif %}
+    {% endif %}
+</b>
+<hr>
+
+
+<div class="w3-card-4 w3-margin w3-white">
+    <div class="w3-container">
+      <a href="/posts/{{ post._id }}" style="text-decoration: none;">
+          <h3 class="display-5">
+              {{ post.title }}
+          </h3>
+      </a>
+
+      <div class="w3-row">
+          <div class="w3-col m8 s12">
+              <h5>
+                  Author:
+                  <a href="/posts/author/{{ post.author }}" style="text-decoration: none;">
+                      <img src="/static/assets/{{ post.author }}.jpg" alt="Avatar" class="avatar">
+                  {{ post.author }}
+                  </a>
+                  <br/>
+                  <span class="w3-opacity" style="font-size: 14px;">Created date: {{ post.created_date }}</span>
+              </h5>
+          </div>
+      </div>
+      {% if session_email != None %}
+            <div class="w3-col m4 w3-hide-small">
+              <a href="/posts/remove/{{ post._id }}" style="text-decoration: none;">
+                  <span class="w3-padding-large w3-right">
+                      <b>Delete</b>
+                  </span>
+              </a>
+            </div>
+            <div class="w3-col m4 w3-hide-small">
+              <a href="/posts/edit/{{ post._id }}" style="text-decoration: none;">
+                  <span class="w3-padding-large w3-right">
+                      <b>Edit</b>
+                  </span>
+              </a>
+            </div>
+      {% endif %}
+    </div>
+
+    <div class="w3-container">
+        <pre style="text-align: justify;">
+          {{ post.content }}
+        </pre>
+    </div>
+  </div>
+
+
+
+<div class="w3-card-4 w3-margin w3-white" id="comment" style="padding-top: 5px;">
+    {% for comment in comments %}
+        <div class="w3-card-4 w3-margin w3-white">
+            <div class="w3-container">
+              <div class="w3-row">
+
+                  <div class="w3-container">
+                      <h5>
+                          <a href="/posts/author/{{ post.author }}" style="text-decoration: none;">
+                                  <img src="/static/assets/{{ comment.author }}.jpg" alt="Avatar" class="avatar">
+                              {{ comment.author }} :
+                          </a>
+                          <br>
+                          <span class="w3-opacity" style="font-size: 12px;">Created date: {{ comment.created_date }}</span>
+                      </h5>
+                      <p style="text-align: justify;">
+                            {{ comment.content }}
+                      </p>
+                      {% if session_email != None %}
+                          <a href="/comments/remove/{{ comment._id }}" style="text-decoration: none;">
+                              <span class="w3-padding-large w3-right">
+                                  <b>Delete</b>
+                              </span>
+                          </a>
+                      {% endif %}
+                  </div>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+    <hr/>
+    <div class="container">
+      {% if session_email == None %}
+            <b>
+                <span style="color: red;">
+                    You need to <a href="/login" style="color: blue;">log in</a> or <a href="/register" style="color: blue;">Sign up</a>.
+                </span>
+                <hr style="visibility: hidden;">
+            </b>
+      {% endif %}
+    <form id="new-post" action="/comments/new" method="post">
+        <div class="form-group">
+            <label for="content_comment">Write new comment</label>
+            <textarea class="form-control" name="content_comment" id="content_comment" rows="6"></textarea>
+        </div>
+        <input type="text" name="post_id" id="post_id" style=" width: 1px; height: 1px; visibility: hidden;" value="{{ post._id }}" >
+        <button type="submit" class="btn btn-success" style="margin-bottom: 15px;">Send</button>
+    </form>
+</div>
+</div>
+{% endblock %}

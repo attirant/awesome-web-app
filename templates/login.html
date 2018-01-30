@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<b>
+    {% if error != "" %}
+        <span style="color: red;">
+            {{ error }}
+        </span>
+        <hr>
+    {% endif %}
+</b>
+
+
+<div class="container" style="max-width:480px">
+    <form id="login-form" action="/auth/login" method="post">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="text" class="form-control" name="email" id="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password">
+        </div>
+        <button type="submit" class="btn btn-success">Sign in</button>
+    </form>
+</div>
+{% endblock %}

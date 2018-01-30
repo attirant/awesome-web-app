@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if session_email != None %}
+    <a href="/posts/new">
+        <button class="btn btn-dark" style="margin-top: 15px;">
+            New post
+        </button>
+    </a>
+    {% endif %}
+    <b>
+        {% if error != "" %}
+            {% if error == "The post removed successfully." or "Results for " in error %}
+                <span style="color: green;">
+                    {{ error }}
+                </span>
+            {% else %}
+                <span style="color: red;">
+                    {{ error }}
+                </span>
+            {% endif %}
+        {% endif %}
+    </b>
+    <hr>
+    {% if posts != None %}
+        {% if posts|length > 0 %}
+            {% for post in posts %}
+                <div class="w3-card-4 w3-margin w3-white">
+                    <div class="w3-container">
+                      <a href="/posts/{{ post._id }}" style="text-decoration: none;">
+                          <h3 class="display-5">
+                              {{ post.title }}
+                          </h3>
+                      </a>
+
+                      <div class="w3-row">
+                          <div class="w3-col m8 s12">
+                              <h5>
+                                  Author:
+                                  <a href="/posts/author/{{ post.author }}" style="text-decoration: none;">
+                                  <img src="/static/assets/{{ post.author }}.jpg" alt="Avatar" class="avatar">
+                                  {{ post.author }}
+                                  </a>
+                                  <br/>
+                                  <span class="w3-opacity" style="font-size: 14px;">Created date: {{ post.created_date }}</span>
+                              </h5>
+                          </div>
+                      </div>
+
+                          {% if session_email != None %}
+                                <div class="w3-col m4 w3-hide-small">
+                                  <a href="/posts/remove/{{ post._id }}" style="text-decoration: none;">
+                                      <span class="w3-padding-large w3-right">
+                                          <b>Delete</b>
+                                      </span>
+                                  </a>
+                                </div>
+                                <div class="w3-col m4 w3-hide-small">
+                                  <a href="/posts/edit/{{ post._id }}" style="text-decoration: none;">
+                                      <span class="w3-padding-large w3-right">
+                                          <b>Edit</b>
+                                      </span>
+                                  </a>
+                                </div>
+                          {% endif %}
+                    </div>
+
+                    <div class="w3-container">
+                        <pre style="text-align: left;">
+                            {{ post.content }}
+                        </pre>
+
+                      <div class="w3-row">
+                        <div class="w3-col m8 s12">
+                          <a href="/posts/{{ post._id }}" style="text-decoration: none;">
+                              <button class="btn btn-dark">
+                                  <b>
+                                      READ MORE »
+                                  </b>
+                              </button>
+                          </a>
+                        </div>
+                        <div class="w3-col m4 w3-hide-small">
+                          <a href="/posts/{{ post._id }}#comment" style="text-decoration: none;">
+                              <span class="w3-padding-large w3-right">
+                                  <b>
+                                      Comments &nbsp;
+                                  </b>
+                                  <span class="w3-tag">
+                                      0
+                                  </span>
+                              </span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            {% endfor %}
+        {% else %}
+            <h4>There aren't any posts yet!</h4>
+        {% endif %}
+    {% endif %}
+<hr>
+{% endblock %}

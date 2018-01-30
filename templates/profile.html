@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card border-success mb-3" style="max-width: 20rem; margin-top: 20px;">
+  <div class="card-header">Profile</div>
+  <div class="card-body text-success">
+    <h4 class="card-title">Mr/Ms {{ lastname }}</h4>
+    <p class="card-text">
+        First name: {{ firstname }}<br/>
+        Last name: {{ lastname }}<br/>
+        Email Address: {{ email }}<br/>
+    </p>
+    <p></p>
+    <p><a href="/" align="right" style="text-decoration: none;">Back To Home</a></p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="/">
+    <button class="btn btn-dark" style="margin-top: 15px;">
+        Back to home
+    </button>
+</a>
+
+<b>
+    {% if error != "" %}
+        {% if error == "The user removed successfully." %}
+            <span style="color: green;">
+                {{ error }}
+            </span>
+        {% else %}
+            <span style="color: red;">
+                {{ error }}
+            </span>
+        {% endif %}
+    {% endif %}
+</b>
+<hr>
+
+<div class="w3-card-4 w3-margin w3-white" id="users" style="padding-top: 5px;">
+    {% for user in users%}
+        <div class="w3-card-4 w3-margin w3-white">
+            <div class="w3-container">
+              <div class="w3-row">
+                  <div class="w3-container">
+                      <h5>
+                          <a href="/posts/author/{{ user.email }}" style="text-decoration: none;">
+                                  <img src="/static/assets/{{ user.email }}.jpg" alt="Avatar" class="avatar">
+                              {{ user.email }} : <span style="color: red;">{{ user.admin }}</span>
+                          </a>
+                          <br>
+
+                          <span class="w3-opacity" style="font-size: 15px; margin-left: 5%;">
+                                First name: {{ user.firstname }}
+                          </span>
+                          <br>
+                          <span class="w3-opacity" style="font-size: 15px; margin-left: 5%;">
+                                Last name: {{ user.lastname }}
+                          </span>
+                      </h5>
+                      {% if user.admin == "" and is_admin() %}
+                          <a href="/users/remove/{{ user._id }}" style="text-decoration: none;">
+                              <span class="w3-padding-large w3-right">
+                                  <b>Delete</b>
+                              </span>
+                          </a>
+                      {% endif %}
+                  </div>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+    <hr/>
+</div>
+{% endblock %}
