@@ -1,0 +1,26 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+
+[packages]
+
+django = "*"
+gunicorn = "*"
+django-heroku = "*"
+Flask = "0.12.2"
+Jinja2 = "2.10"
+MarkupSafe = "1.0"
+Werkzeug = "0.14.1"
+click = "6.7"
+itsdangerous = "0.24"
+pip = "9.0.1"
+pymongo = "3.6.0"
+setuptools = "38.4.0"
+wheel = "0.30.0"
+
+[requires]
+
+python_version = "3.6"
+
